@@ -1,0 +1,17 @@
+{
+  "name": "node-red-contrib-delay-gate",
+  "version": "1.0.0",
+  "description": "Automatically closing gate node with opening delay.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rababarber/node-red-contrib-delay-gate.git"
+  },  
+  "author": "rababarber",
+  "license": "MIT",
+  "keywords": [ "node-red", "node-red-contrib", "gate", "delay"],
+  "node-red" : {
+    "nodes": {
+        "test-node": "delay-gate/delay-gate.js"
+    }
+}
+}

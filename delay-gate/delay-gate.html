@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('delay-gate', {
+        category: 'function',
+        color: '#3FADB5',
+        defaults: {
+            name: {value:""},
+            triggerPayload: {value: ''},
+            triggerPayloadType: {value: 'str'},
+            delayDuration: {value:10, required:true, validate:function(v){
+                return RED.validators.number()(v) && v > 0;
+            }},
+            delayUnits: {value:"s"},
+            openDuration: {value:5, required:true, validate:function(v){
+                return RED.validators.number()(v) && v > 0;
+            }},
+            openUnits: {value:"s"},
+            closeGate: {value:true},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-clock-o",
+        label: function() {
+            return this.name||"delay-gate";
+        },
+        oneditprepare: function() {
+            $("#node-input-triggerPayload").typedInput({
+                default: 'str',
+                typeField: $("#node-input-triggerPayloadType"),
+                types:['str','num','bool']
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="delay-gate">
+    <div class="form-row"><strong>Trigger</strong></div>
+    <div class="form-row">
+        <label style="width:30%;" for="node-input-triggerPayload"><i class="fa fa-arrow-right"></i> payload</label>
+        <input type="hidden" id="node-input-triggerPayloadType">
+        <input type="text" id="node-input-triggerPayload">
+    </div> 
+    <div class="form-row"></div> 
+    <div class="form-row"><strong>Timers</strong></div>
+    <div class="form-row">
+        <label for="node-input-delayDuration"><i class="fa fa-clock-o"></i> delay</label>
+        <input type="text" id="node-input-delayDuration" style="text-align:end; width:70px !important">
+        <select id="node-input-delayUnits" style="width:140px !important">
+            <option value="ms">milliseconds</option>
+            <option value="s">seconds</option>
+            <option value="mi">minutes</option>
+            <option value="hr">hours</option>
+        </select>
+        <span> before open</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-openDuration"><i class="fa fa-clock-o"></i> close</label>
+        <input type="text" id="node-input-openDuration" style="text-align:end; width:70px !important">
+        <select id="node-input-openUnits" style="width:140px !important">
+            <option value="ms">milliseconds</option>
+            <option value="s">seconds</option>
+            <option value="mi">minutes</option>
+            <option value="hr">hours</option>
+        </select>
+        <span> after open</span>
+    </div>
+    <div class="form-row">
+        <span><input type="checkbox" id="node-input-closeGate" style="display:inline-block; width:15px; vertical-align:top;">&nbsp;close the gate immediately after sending the message</span> 
+    </div>
+    <div class="form-row"></div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="delay-gate">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>
