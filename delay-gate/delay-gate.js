@@ -41,6 +41,7 @@ module.exports = function(RED) {
         var delay = null
         var timeout = null
         var nodeContext = this.context();
+        reset();
 
         function reset() {
             node.status({fill:"red",shape:"ring",text:"closed"});
