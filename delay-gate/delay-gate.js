@@ -43,7 +43,7 @@ module.exports = function(RED) {
         var nodeContext = this.context();
 
         function reset() {
-            node.status({});
+            node.status({fill:"red",shape:"ring",text:"closed"});
             nodeContext.set('triggered', undefined)
             if (delay) clearTimeout(delay);
             if (timeout) clearTimeout(timeout);
@@ -52,7 +52,6 @@ module.exports = function(RED) {
         }
         
         this.on('input', function(msg) {
-            this.log(this.payload);
             if (!this.payload || msg.payload === this.payload) {
                 triggerTs = nodeContext.get('triggered');
                 if (triggerTs) {
@@ -62,9 +61,9 @@ module.exports = function(RED) {
                     } 
                 } else {
                     nodeContext.set('triggered', Date.now())
-                    node.status({fill:"yellow",shape:"ring",text:"delaying"});
+                    node.status({fill:"yellow",shape:"ring",text:"delay"});
                     delay = setTimeout(function() {
-                        node.status({fill:"green",shape:"ring",text:"waiting message"});;
+                        node.status({fill:"green",shape:"ring",text:"open"});;
                     }, unitMapper[this.delayUnits]*this.delayDuration);
                     timeout = setTimeout(function() {
                         reset();

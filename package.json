@@ -13,5 +13,5 @@
     "nodes": {
         "test-node": "delay-gate/delay-gate.js"
     }
-}
+  }
 }

@@ -33,14 +33,14 @@
 </script>
 
 <script type="text/html" data-template-name="delay-gate">
-    <div class="form-row"><strong>Trigger</strong></div>
+    <div class="form-row"><strong>Payload</strong></div>
     <div class="form-row">
-        <label style="width:30%;" for="node-input-triggerPayload"><i class="fa fa-arrow-right"></i> payload</label>
+        <label style="width:30%;" for="node-input-triggerPayload"><i class="fa fa-arrow-right"></i> accept only</label>
         <input type="hidden" id="node-input-triggerPayloadType">
         <input type="text" id="node-input-triggerPayload">
     </div> 
     <div class="form-row"></div> 
-    <div class="form-row"><strong>Timers</strong></div>
+    <div class="form-row"><strong>Gate</strong></div>
     <div class="form-row">
         <label for="node-input-delayDuration"><i class="fa fa-clock-o"></i> delay</label>
         <input type="text" id="node-input-delayDuration" style="text-align:end; width:70px !important">
@@ -64,7 +64,7 @@
         <span> after open</span>
     </div>
     <div class="form-row">
-        <span><input type="checkbox" id="node-input-closeGate" style="display:inline-block; width:15px; vertical-align:top;">&nbsp;close the gate immediately after sending the message</span> 
+        <span><input type="checkbox" id="node-input-closeGate" style="display:inline-block; width:15px; vertical-align:top;">&nbsp;close the gate immediately after passing the message</span> 
     </div>
     <div class="form-row"></div>
     <div class="form-row">
@@ -74,5 +74,25 @@
 </script>
 
 <script type="text/html" data-help-name="delay-gate">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>Normally Closed Delay Gate node - passes on data only when the gate is open. The gate will be opened with the first incoming message after initial delay period and is closed automatically either after the message has been passed through or until open time passes. The messages received during the delay period are not queued and will not be passed after the gate opens.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+    <dt>payload
+        <span class="property-type">string | number | boolean</span>
+        <dd>the payload of the message to pass.</dd>
+    </dt>
+    </dl>
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+    <dt>payload
+        <span class="property-type">as per input</span>
+        <dd>If triggered the output will be the same as the input.</dd>
+    </dt>
+    </dl>
+    <h3>Details</h3>
+    <p>Optionally only the messages with specific <code>msg.payload</code> can be allowed to pass. Accepted message type and payload value can be specified in node properties. When the <code>msg.payload</code> value is not defined, all the messages are accepted by the node.</p>
+    <p>Initially the gate is in <code>closed</code> state.</p>
+    <p>When the first accepted message is received the gate enters <code>delay</code> state and starts delay timer. During the delay state all accepted messages are ignored. When not accepted message is received during the delay state the delay is cancelled and the gate returns to <code>closed</code> state.</p>
+    <p>When the delay period has passed the gate enters <code>open</code> state and the next accepted message will be passed to gate output.</p>
+    <p>In case the node is configured to close the gate immediately after passing the message the gate returns to <code>closed</code> state after passing the first message. Otherwise it stays open for the accepted messages until the gate open period has passed. In case not accepted message is received during that time the gate returns to <code>closed</code> state immediately.</p>
 </script>
