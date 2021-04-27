@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-delay-gate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automatically closing gate node with opening delay.",
   "repository": {
     "type": "git",
